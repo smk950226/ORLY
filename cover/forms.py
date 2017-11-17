@@ -8,4 +8,6 @@ class CoverForm(forms.Form):
 
     @property
     def get_params(self):
-        return urlencode(self.cleaned_data)
+        if hasattr(self, 'cleaned_data'):
+            return urlencode(self.cleaned_data)
+            return None

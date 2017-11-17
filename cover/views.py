@@ -9,7 +9,6 @@ def index(request):
         form = CoverForm(request.POST)
         if form.is_valid():
             form.cleaned_data
-            return redirect('cover:index')
     else:
         form = CoverForm()
     return render(request, 'cover/index.html', {

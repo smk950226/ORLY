@@ -19,6 +19,10 @@ def image_generator(request):
     title = request.GET['title']
     top_text = request.GET['top_text']
     author = request.GET['author']
+    animal_code = request.GET['animal_code']
+    color_code = request.GET['color_code']
+    guide_text = request.GET['guide_text']
+    guide_text_placement = request.GET['guide_text_placement']
 
     img = Image.new('RGB', (256,256), 'white')
 

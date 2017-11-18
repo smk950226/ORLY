@@ -3,6 +3,7 @@ from PIL import Image,ImageFont, ImageDraw
 from .forms import CoverForm
 from django.http import HttpResponse
 from django.conf import settings
+from .utils import COLOR_CODES
 
 def index(request):
     if request.method == 'POST':
@@ -24,7 +25,14 @@ def image_generator(request):
     guide_text = request.GET['guide_text']
     guide_text_placement = request.GET['guide_text_placement']
 
-    img = Image.new('RGB', (256,256), 'white')
+    animal_path = settings.ROOT('assets', 'animal', '{}.png'.format(animal_code))
+    animal_img = Image.open(animal_path)
+    animal_img = animal_img.resize((200,200))
+
+    color = COLOR_CODES[int(color_code)]
+
+    img = Image.new('RGB', (500,700), color)
+    img.paste(animal_img, (0,0))
 
     ttf_path = settings.ROOT('assets', 'fonts', 'NanumGothicCoding.ttf')
     d = ImageDraw.Draw(img)

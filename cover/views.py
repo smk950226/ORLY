@@ -27,24 +27,34 @@ def image_generator(request):
 
     animal_path = settings.ROOT('assets', 'animal', '{}.png'.format(animal_code))
     animal_img = Image.open(animal_path)
-    animal_img = animal_img.resize((200,200))
 
     color = COLOR_CODES[int(color_code)]
 
-    img = Image.new('RGB', (500,700), color)
-    img.paste(animal_img, (0,0))
+    img = Image.new('RGB', (500,700), (255,255,255))
+    animal_img = animal_img.resize((400,400))
+
+    img.paste(animal_img, (50,40))
 
     ttf_path = settings.ROOT('assets', 'fonts', 'NanumGothicCoding.ttf')
     d = ImageDraw.Draw(img)
+    
+    d.rectangle((20,0,480,10), fill = color)
+    
+    d.rectangle((10,400,480,510), fill = color)
 
-    font = ImageFont.truetype(ttf_path, 40)
-    d.text((10,10), title, font=font, fill=(0,255,0,120))
+    font = ImageFont.truetype(ttf_path, 70)
+    d.text((45,430), title, font=font, fill=(255,255,255,255))
         
     font = ImageFont.truetype(ttf_path, 20)
-    d.text((10,60), top_text, font=font, fill=(0,255,0,255))
+    d.text((160,15), top_text, font=font, fill=(0,0,0,255))
 
-    font = ImageFont.truetype(ttf_path, 10)
-    d.text((10,110), author, font=font, fill=(0,255,0,255))
+    font = ImageFont.truetype(ttf_path, 25)
+    d.text((360,655), author, font=font, fill=(0,0,0,255))
+    
+    position = (125,505)#bottom-right
+    
+    font = ImageFont.truetype(ttf_path, 30)
+    d.text(position, guide_text, font=font, fill=(0,0,0,255))
 
     response = HttpResponse(content_type = 'image/png')
     img.save(response, format='PNG')
